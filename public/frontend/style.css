@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+    --primary: #009900;
+    --light-primary: #00bf00;
+    --dark-primary: #007000;
+    --secondary: #ffcc33;
+    --dark-secondary: #deb12b;
+}
+
+body {
+    font-family: "Inter", serif;
+    color: slategray;
+}
+
+.container{
+    width: 86%;
+    margin: auto;
+}
+
+.primary{
+    color: var(--primary);
+}
+
+.bg-primary{
+    background-color: var(--primary);
+}
+
+.secondary{
+    color: var(--secondary);
+}
+
+.bg-secondary{
+    background-color: var(--secondary);
+}
+
+.btn-primary{
+    background-color: var(--light-primary);
+    padding: 4px 12px;
+    color: white;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover{
+    background-color: var(--dark-primary);
+}
+
+
+.btn-secondary{
+    background-color: var(--secondary);
+    padding: 4px 12px;
+    color: white;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover{
+    background-color: var(--dark-secondary);
+}
