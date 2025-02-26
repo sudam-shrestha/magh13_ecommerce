@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Admin;
+use App\Models\Shop;
 
 return [
 
@@ -46,6 +47,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'shop' => [
+            'driver' => 'session',
+            'provider' => 'shops',
+        ],
     ],
 
     /*
@@ -74,6 +79,11 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => Admin::class,
+        ],
+
+        'shops' => [
+            'driver' => 'eloquent',
+            'model' => Shop::class,
         ],
 
         // 'users' => [
