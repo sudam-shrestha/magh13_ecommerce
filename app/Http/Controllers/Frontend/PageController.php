@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailNotification;
 use App\Models\Admin;
+use App\Models\Product;
 use App\Models\ShopProfile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -16,7 +17,17 @@ class PageController extends Controller
 {
     public function home()
     {
-        return view('frontend.home');
+        $shops = Shop::where('status', 'approved')->where('expire_date', '>=', date('Y-m-d'))->get();
+        $special_deals = Product::where('discount', '!=', 0)->where('visible', true)->get();
+        return view('frontend.home', compact('shops', 'special_deals'));
+    }
+
+
+    public function compare(Request $request)
+    {
+        $q = $request->q;
+        $products = Product::orderBy('price', 'asc')->where('visible', true)->where('name', 'like', "%$request->q%")->get();
+        return view('frontend.compare', compact('products','q'));
     }
 
 
