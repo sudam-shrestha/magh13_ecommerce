@@ -71,4 +71,12 @@ class PageController extends Controller
 
         return redirect()->route('home');
     }
+
+
+
+    public function product($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('frontend.product', compact('product'));
+    }
 }

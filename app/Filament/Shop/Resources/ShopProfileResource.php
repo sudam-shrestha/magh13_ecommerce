@@ -61,7 +61,9 @@ class ShopProfileResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('shop.expire_date')
                     ->label('Expire Date')
-                    ->default("hello")
+                    ->formatStateUsing(function ($state) {
+                        return \Carbon\Carbon::parse($state)->diffForHumans();
+                    })
                     ->badge()
                     ->color(function ($state) {
                         if (now() >= $state) {

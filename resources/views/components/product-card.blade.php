@@ -1,5 +1,5 @@
 @props(['product'])
-<div class="grid grid-cols-2 gap-2 items-center">
+<a href="{{ route('product', $product->id) }}" class="grid grid-cols-2 gap-2 items-center">
     <img src="{{ asset(Storage::url($product->images[0])) }}" alt="{{ $product->name }}">
 
     <div>
@@ -13,4 +13,4 @@
             @endif
         </div>
     </div>
-</div>
+</a>
