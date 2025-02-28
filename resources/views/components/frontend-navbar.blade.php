@@ -10,8 +10,8 @@
             </div>
         </form>
         <div>
-            <a href="" class="btn-primary">SignUp</a>
-            <a href="" class="btn-secondary">Login</a>
+            <a href="{{route('register')}}" class="btn-primary">SignUp</a>
+            <a href="{{route('login')}}" class="btn-secondary">Login</a>
         </div>
     </div>
 </nav>
