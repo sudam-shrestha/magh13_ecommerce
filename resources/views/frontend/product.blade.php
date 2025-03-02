@@ -424,24 +424,29 @@
                 <div class="">
                     <div class="_product-detail-content">
                         <h1 class="text-4xl"> {{ $product->name }} </h1>
-                        <div class="_p-price-box">
-                            <div class="p-list">
-                                <span> M.R.P. : <i class="fa fa-inr"></i> <del> 1399 </del> </span>
-                                <span class="price"> Rs. 699 </span>
-                            </div>
-                            <div class="_p-add-cart">
-                                <div class="_p-qty">
-                                    <span>Add Quantity</span>
-                                    <div class="value-button decrease_" id="" value="Decrease Value">-</div>
-                                    <input type="number" name="qty" id="number" value="1" />
-                                    <div class="value-button increase_" id="" value="Increase Value">+</div>
+                        <form action="{{ route('cart.store') }}" method="post" accept-charset="utf-8">
+                            @csrf
+                            <div class="_p-price-box">
+                                <div class="p-list">
+                                    <span> M.R.P. : <i class="fa fa-inr"></i> <del> 1399 </del> </span>
+                                    <span class="price"> Rs. 699 </span>
                                 </div>
-                            </div>
-                            <div class="_p-features">
-                                <span> Description About this product:- </span>
-                                <div> {!! $product->description !!} </div>
-                            </div>
-                            <form action="" method="post" accept-charset="utf-8">
+                                <div class="_p-add-cart">
+                                    <div class="_p-qty">
+                                        <span>Add Quantity</span>
+                                        <div class="value-button decrease_" id="" value="Decrease Value">-
+                                        </div>
+                                        <input type="number" name="qty" min="1" id="number"
+                                            value="1" />
+                                        <input type="text" name="product_id" value="{{ $product->id }}" hidden>
+                                        <div class="value-button increase_" id="" value="Increase Value">+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_p-features">
+                                    <span> Description About this product:- </span>
+                                    <div> {!! $product->description !!} </div>
+                                </div>
                                 <ul class="spe_ul"></ul>
                                 <div class="_p-qty-and-cart">
                                     <div class="_p-add-cart">
@@ -450,8 +455,8 @@
                                         </button>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -632,17 +637,19 @@
 
             function increaseValue(_this) {
                 var value = parseInt($(_this).siblings('input#number').val(), 10);
-                value = isNaN(value) ? 0 : value;
+                value = isNaN(value) ? 1 : value;
                 value++;
                 $(_this).siblings('input#number').val(value);
             }
 
             function decreaseValue(_this) {
                 var value = parseInt($(_this).siblings('input#number').val(), 10);
-                value = isNaN(value) ? 0 : value;
-                value < 1 ? value = 1 : '';
-                value--;
-                $(_this).siblings('input#number').val(value);
+                if (value > 1) {
+                    value = isNaN(value) ? 1 : value;
+                    value < 1 ? value = 1 : '';
+                    value--;
+                    $(_this).siblings('input#number').val(value);
+                }
             }
         });
     </script>

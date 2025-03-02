@@ -44,4 +44,9 @@ class Shop extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Product::class);
     }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }
