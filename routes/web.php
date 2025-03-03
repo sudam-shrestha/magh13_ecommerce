@@ -3,11 +3,18 @@
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::get('/order-details/{id}', function ($id) {
+    $order = Order::findOrFail($id);
+    return view('filament.order_detail', compact('order'));
+})->name('order.details');
+
 
 Route::get('/google/login', [AuthController::class, 'google_login'])->name('google.login');
 Route::get('/google/callback', [AuthController::class, 'google_callback'])->name('google.callback');
@@ -32,7 +39,10 @@ Route::middleware('auth')->group(function () {
     Route::post("/cart-store", [AuthController::class, "cart_store"])->name('cart.store');
 
     Route::post('/cart/update/{id}', [AuthController::class, 'update_cart'])->name('cart.update');
-Route::delete('/cart/remove/{id}', [AuthController::class, 'remove_cart'])->name('cart.remove');
+    Route::delete('/cart/remove/{id}', [AuthController::class, 'remove_cart'])->name('cart.remove');
+
+    Route::get("/check-out/{id}", [AuthController::class, "check_out"])->name('check_out');
+    Route::post("/order-store", [AuthController::class, "order_store"])->name('order.store');
 });
 
 require __DIR__ . '/auth.php';

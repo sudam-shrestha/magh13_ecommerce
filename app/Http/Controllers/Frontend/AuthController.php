@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderDescription;
 use App\Models\Product;
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -94,5 +97,48 @@ class AuthController extends Controller
                 'message' => 'Failed to delete cart'
             ], 500);
         }
+    }
+
+
+    public function check_out($id)
+    {
+        $all_carts = Cart::where('user_id', Auth::user()->id)->get();
+        $carts = [];
+        $total = 0;
+        foreach ($all_carts as $cart) {
+            if ($cart->product->shop_id == $id) {
+                $carts[] = $cart;
+                $total += $cart->amount * $cart->qty;
+            }
+        }
+        return view('frontend.checkout', compact('carts', 'total', 'id'));
+    }
+
+    public function order_store(Request $request)
+    {
+        // return $request;
+        $order = new Order();
+        $order->total_amount = $request->total_amount;
+        $order->shop_id = $request->shop_id;
+        $order->payment_type = $request->payment_type;
+        $order->user_id = Auth::user()->id;
+        $order->save();
+
+        $all_carts = Cart::where('user_id', Auth::user()->id)->get();
+
+        foreach ($all_carts as $cart) {
+            if ($cart->product->shop_id == $request->shop_id) {
+                $orderDes = new OrderDescription();
+                $orderDes->order_id = $order->id;
+                $orderDes->product_id = $cart->product_id;
+                $orderDes->amount = $cart->amount;
+                $orderDes->qty = $cart->qty;
+                $orderDes->save();
+                $cart->delete();
+            }
+        }
+
+        toast("Order placed successfully!", "success");
+        return redirect()->back();
     }
 }

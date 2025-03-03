@@ -99,7 +99,8 @@
                                 </span>
                             </div>
                             <div class="flex justify-end">
-                                <a href="" class="btn-primary">
+                                <a href="{{ route('check_out', $shopCarts->first()->product->shop_id) }}"
+                                    class="btn-primary">
                                     Proceed to Checkout
                                 </a>
                             </div>
