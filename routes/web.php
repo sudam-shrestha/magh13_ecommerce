@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -15,7 +16,7 @@ Route::get('/order-details/{id}', function ($id) {
     return view('filament.order_detail', compact('order'));
 })->name('order.details');
 
-
+Route::post('/save-token', [NotificationController::class, 'saveToken']);
 Route::get('/google/login', [AuthController::class, 'google_login'])->name('google.login');
 Route::get('/google/callback', [AuthController::class, 'google_callback'])->name('google.callback');
 

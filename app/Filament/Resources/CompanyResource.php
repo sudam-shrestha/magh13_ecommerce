@@ -61,7 +61,7 @@ class CompanyResource extends Resource
                             ->columnSpanFull()
                             ->default(null),
                         Forms\Components\FileUpload::make('logo')
-                            ->maxSize(1024)
+                            ->maxSize(51200)
                             ->directory('logos')
                             ->required(),
                     ]),

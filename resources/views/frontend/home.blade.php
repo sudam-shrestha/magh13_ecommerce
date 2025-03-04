@@ -1,5 +1,8 @@
 <x-frontend-layout>
 
+    @if (Auth::user())
+        <button id="allow-notifications-btn" class="btn btn-custom btn-lg">Allow Notifications</button>
+    @endif
 
     {{-- Featured Shop --}}
     <section>
@@ -73,8 +76,7 @@
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow-sm">
                         <!-- Modal header -->
-                        <div
-                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                             <h3 class="text-xl font-semibold primary">
                                 Welcome to Floor Digital Pvt. Ltd.
                             </h3>
@@ -143,6 +145,70 @@
         </div>
     </section>
     {{-- Shop Request --}}
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDoxz4_eCpnRexb6QddGZdI4bLfTJZPN0",
+            authDomain: "magh13.firebaseapp.com",
+            projectId: "magh13",
+            storageBucket: "magh13.firebasestorage.app",
+            messagingSenderId: "122828337174",
+            appId: "1:122828337174:web:3b9cd6fa243325852d4537",
+            measurementId: "G-5HLPJTHC2J"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const messaging = firebase.messaging();
+        messaging.onMessage(function(payload) {
+            console.log('Message received in foreground: ', payload);
+            const title = payload.notification.title;
+            const options = {
+                body: payload.notification.body,
+                icon: payload.notification.icon,
+            };
+            // Show notification in the foreground
+            new Notification(title, options);
+        });
+
+        // Handle Allow Notifications button
+        document.getElementById('allow-notifications-btn').addEventListener('click', () => {
+            messaging.requestPermission()
+                .then(() => messaging.getToken())
+                .then((token) => {
+                    console.log('FCM Token:', token);
+
+                    // Send token to the server
+                    fetch('/save-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content'),
+                        },
+                        body: JSON.stringify({
+                            token: token
+                        }),
+                    }).then(response => {
+                        if (response.ok) {
+                            alert('Notifications enabled successfully!');
+                        } else {
+                            alert('Failed to save token.');
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error('Permission denied:', error);
+                    alert('Failed to enable notifications.');
+                });
+        });
+    </script>
 
 
 </x-frontend-layout>
