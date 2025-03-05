@@ -57,11 +57,11 @@ class PageController extends Controller
 
         $data = [
             "subject" => "Shop Request",
-            "name" => $request->name,
-            "shop_name" => $request->shop_name,
-            "contact" => $request->contact,
-            "address" => $request->address,
-            "review_link" => url('/admin'),
+                "name" => $request->name,
+                "shop_name" => $request->shop_name,
+                "contact" => $request->contact,
+                "address" => $request->address,
+                "review_link" => url('/admin'),
         ];
 
         $admins = Admin::all();

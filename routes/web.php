@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Frontend\DemoController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Order;
@@ -10,6 +11,9 @@ use App\Http\Controllers\NotificationController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::get("/api", [DemoController::class,'demo']);
+Route::post("/demo", [DemoController::class,'post']);
 
 Route::get('/order-details/{id}', function ($id) {
     $order = Order::findOrFail($id);
