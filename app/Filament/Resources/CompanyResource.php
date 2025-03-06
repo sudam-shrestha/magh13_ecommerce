@@ -30,10 +30,10 @@ class CompanyResource extends Resource
     protected static ?string $navigationGroup = 'Settings';
     protected static ?int $navigationSort = 1;
 
-    public static function canCreate(): bool
-    {
-        return Company::count() == 0 ? true : false;
-    }
+    // public static function canCreate(): bool
+    // {
+    //     return Company::count() == 0 ? true : false;
+    // }
 
     public static function form(Form $form): Form
     {

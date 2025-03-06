@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotificationController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -17,6 +18,8 @@ Route::post("/demo", [DemoController::class,'post']);
 
 Route::get('/order-details/{id}', function ($id) {
     $order = Order::findOrFail($id);
+    $pdf = Pdf::loadView('filament.order_detail', compact('order'));
+    return $pdf->download('invoice.pdf');
     return view('filament.order_detail', compact('order'));
 })->name('order.details');
 

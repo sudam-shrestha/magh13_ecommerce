@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,31 +15,38 @@
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
         }
+
         .header {
             text-align: center;
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
+
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-bottom: 20px;
         }
+
         .items-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        .items-table th, .items-table td {
+
+        .items-table th,
+        .items-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
+
         .items-table th {
             background-color: #f2f2f2;
         }
+
         .total {
             text-align: right;
             font-size: 1.2em;
@@ -46,6 +54,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="voucher">
         <div class="header">
@@ -93,8 +102,9 @@
         </table>
 
         <div class="total">
-            Total Amount: $670.00
+            Total Amount: NRs.{{ $order->total_amount }}
         </div>
     </div>
 </body>
+
 </html>
